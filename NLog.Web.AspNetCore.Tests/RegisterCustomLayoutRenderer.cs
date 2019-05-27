@@ -18,21 +18,30 @@ namespace NLog.Web.AspNetCore.Tests
         [Fact]
         public void RegisterLayoutRendererTest()
         {
-
-
-            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
-            var serviceProviderMock = Substitute.For<IServiceProvider>();
-            serviceProviderMock.GetService(typeof(IHttpContextAccessor)).Returns(httpContextAccessorMock);
-            ServiceLocator.ServiceProvider = serviceProviderMock;
+            var httpcontext = SetupHttpAccessorWithHttpContext();
+            httpcontext.Connection.LocalPort.Returns(123);
 
             // Act
-            AspNetLayoutRendererBase.Register("test-web", (info, accessor, arg3) => accessor.HttpContext.Connection.LocalPort);
+            AspNetLayoutRendererBase.Register("test-web", 
+                (logEventInfo, httpContextAccessor, loggingConfiguration) => httpContextAccessor.HttpContext.Connection.LocalPort);
             Layout l = "${test-web}";
             var restult = l.Render(LogEventInfo.CreateNullEvent());
 
             // Assert
-            Assert.Equal("something", restult);
+            Assert.Equal("123", restult);
+        }
+      
+        private static HttpContext SetupHttpAccessorWithHttpContext()
+        {
+            var httpContextAccessorMock = Substitute.For<IHttpContextAccessor>();
+            var serviceProviderMock = Substitute.For<IServiceProvider>();
+            serviceProviderMock.GetService(typeof(IHttpContextAccessor)).Returns(httpContextAccessorMock);
 
+            var httpcontext = Substitute.For<HttpContext>();
+
+            ServiceLocator.ServiceProvider = serviceProviderMock;
+            httpContextAccessorMock.HttpContext.Returns(httpcontext);
+            return httpcontext;
         }
     }
 }
