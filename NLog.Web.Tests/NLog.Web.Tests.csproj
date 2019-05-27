@@ -140,7 +140,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <None Include="NLog.snk" />
     <None Include="packages.NLog.Web.Tests.config">
       <SubType>Designer</SubType>
     </None>
