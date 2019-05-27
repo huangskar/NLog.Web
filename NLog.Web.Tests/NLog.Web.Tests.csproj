@@ -127,6 +127,9 @@
     <Compile Include="..\NLog.Web.AspNetCore.Tests\LayoutRenderers\AspNetRequestUserAgentTests.cs" />
     <Compile Include="..\NLog.Web.AspNetCore.Tests\LayoutRenderers\AspNetRequestHttpMethodRendererTests.cs" />
     <Compile Include="..\NLog.Web.AspNetCore.Tests\LayoutRenderers\AspNetQueryStringLayoutRendererTests.cs" />
+    <Compile Include="..\NLog.Web.AspNetCore.Tests\RegisterCustomLayoutRenderer.cs">
+      <Link>RegisterCustomLayoutRenderer.cs</Link>
+    </Compile>
     <Compile Include="..\NLog.Web.AspNetCore.Tests\TestBase.cs">
       <Link>TestBase.cs</Link>
     </Compile>
